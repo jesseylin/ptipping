@@ -2,7 +2,7 @@
 
 - [ ] Code basic ODEs in Julia
 - [ ] Reproduce classical bifurcation diagram
-- [ ] Compute basins of attraction (numerically)
+- [ ] Compute basins of attraction (numerically)/ptipping diagram
 
 # Outline of talk
 
