@@ -1,11 +1,3 @@
-module RMA
-
-export RMAParameters, vec_f, integrate_ode, critical_r0, e3
-
-using DifferentialEquations
-using StaticArrays
-using LinearAlgebra
-
 @kwdef struct RMAParameters{T} <: AbstractVector{T}
     c::T = 0.19
     mu::T = 0.03
@@ -48,6 +40,4 @@ function e3(p::RMAParameters)
     X_star = delta * beta / (gamma * alpha - delta)
     Y_star = r * gamma / delta * X_star * (1 - c / r * X_star) * (X_star - mu) / (nu + X_star)
     SA[X_star, Y_star]
-end
-
 end

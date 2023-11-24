@@ -1,13 +1,17 @@
 using DrWatson
 @quickactivate
 
-include(srcdir("RMA.jl"))
+println("Including jl")
+include(srcdir("jl"))
 
+
+println("Loading dependencies")
 using DifferentialEquations
 using StaticArrays
 using LinearAlgebra
 BLAS.set_num_threads(6)
 using ProgressMeter
+println("Dependencies loaded")
 
 
 function poincare_iterate(
@@ -36,13 +40,13 @@ function poincare_iterate(
     end
 
     cb = ContinuousCallback(condition, affect!)
-    ode = ODEProblem(RMA.rma_step, u0, (0.0, tmax), p)
+    ode = ODEProblem(rma_step, u0, (0.0, tmax), p)
     sol = solve(ode, AutoVern7(Rodas5()); callback=cb, save_everystep=false)
 
     SA[section_transverse, sol.u[end][2]], sol.t[end]
 end
 function integrate_to_limit(u0, p; tequil=1000)
-    ode = ODEProblem(RMA.rma_step, u0, (0, tequil), p)
+    ode = ODEProblem(rma_step, u0, (0, tequil), p)
     # solve using a more sophisticated stiff solver
     sol = solve(ode, AutoVern7(Rodas5()); save_everystep=false)
     p_lc = sol[end]
@@ -53,7 +57,7 @@ function find_fixed_point(u0, p; maxtries=1e5, reltol=1e-4)
     u0 = integrate_to_limit(u0, p)
 
     # ensure we're on the section
-    eq = RMA.e3(p)
+    eq = e3(p)
     u0, _ = poincare_iterate(u0, p; section_transverse=eq[1], section_int=(0, 1))
 
     # determine size of section
@@ -81,8 +85,8 @@ function find_fixed_point(u0, p; maxtries=1e5, reltol=1e-4)
     return u0, T
 end
 function find_limit_cycle(r; reltol=1e-8, maxtries=1e5)
-    p = RMA.RMAParameters(r=r)
-    eq = RMA.e3(p)
+    p = RMAParameters(r=r)
+    eq = e3(p)
 
     # start within the limit cycle basin
     u0 = eq + SA[0, -1e-6]
@@ -105,7 +109,7 @@ end
 # ╔═╡ 62bd9bc4-03c5-44ef-95d0-7fdbf200cec4
 function basin(r; num_samples=100)
     num_samples = num_samples
-    p = RMA.RMAParameters(r=r)
+    p = RMAParameters(r=r)
     xs = LinRange(0, p.r / p.c + 8, num_samples)
     ys = LinRange(0, 0.03, num_samples)
     zs = [brute_force_discriminator(x, y; p=p) for x in xs, y in ys]
@@ -113,10 +117,10 @@ function basin(r; num_samples=100)
 end
 
 function main()
-    r__range = 1.6:0.1:2.5
+    r_range = 1.6:0.1:2.5
     num_samples = 300
     @showprogress for r in r_range
-        p = RMA.RMAParameters(r=r)
+        p = RMAParameters(r=r)
         # guard to not redo experiment
         if isfile(savename(p, "jld2"))
             println("Already did r=$(r), skipping...")
@@ -127,3 +131,6 @@ function main()
         @tagsave(datadir("basins", savename(p, "jld2")), output)
     end
 end
+
+println("Starting simulation...")
+main()

@@ -33,14 +33,14 @@ df = collect_results!(datadir("basins"))
 begin
   row = df[10, :]
   nt = struct2dict(row.p) |> values |> first
-  p = RMA.RMAParameters(nt...)
+  p = RMAParameters(nt...)
 end
 
 # ╔═╡ ad0371f9-c0ad-4dfb-af4d-5b1fbc8dedc8
 p.r
 
 # ╔═╡ bdce918d-dbae-4a1e-89b4-a9b950b176e9
-let xs = row.xs, ys = row.ys, zs = row.zs, eq = RMA.e3(p)
+let xs = row.xs, ys = row.ys, zs = row.zs, eq = e3(p)
   fig, ax, hm = heatmap(
     xs, ys, zs,
     colormap=Makie.Categorical(:viridis),
@@ -63,12 +63,12 @@ end
 
 # ╔═╡ 5218dfe1-84d9-4669-a882-672bf2ee07f5
 begin
-	zs(i) = df[i,:].zs
-	unstab_zs =zs(10)-zs(1)
+  zs(i) = df[i, :].zs
+  unstab_zs = zs(10) - zs(1)
 end
 
 # ╔═╡ 02e83fc3-33a7-41b2-8b13-6be5f9da846e
-let xs = row.xs, ys = row.ys, zs = unstab_zs, eq = RMA.e3(p)
+let xs = row.xs, ys = row.ys, zs = unstab_zs, eq = e3(p)
   fig, ax, hm = heatmap(
     xs, ys, zs,
     colormap=Makie.Categorical(:viridis),

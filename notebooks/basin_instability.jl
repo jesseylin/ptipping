@@ -54,13 +54,13 @@ begin
     end
 
     cb = ContinuousCallback(condition, affect!)
-    ode = ODEProblem(RMA.rma_step, u0, (0.0, tmax), p)
+    ode = ODEProblem(rma_step, u0, (0.0, tmax), p)
     sol = solve(ode, AutoVern7(Rodas5()); callback=cb, save_everystep=false)
 
     SA[section_transverse, sol.u[end][2]], sol.t[end]
   end
   function integrate_to_limit(u0, p; tequil=1000)
-    ode = ODEProblem(RMA.rma_step, u0, (0, tequil), p)
+    ode = ODEProblem(rma_step, u0, (0, tequil), p)
     # solve using a more sophisticated stiff solver
     sol = solve(ode, AutoVern7(Rodas5()); save_everystep=false)
     p_lc = sol[end]
@@ -71,7 +71,7 @@ begin
     u0 = integrate_to_limit(u0, p)
 
     # ensure we're on the section
-    eq = RMA.e3(p)
+    eq = e3(p)
     u0, _ = poincare_iterate(u0, p; section_transverse=eq[1], section_int=(0, 1))
 
     # determine size of section
@@ -99,8 +99,8 @@ begin
     return u0, T
   end
   function find_limit_cycle(r; reltol=1e-8, maxtries=1e5)
-    p = RMA.RMAParameters(r=r)
-    eq = RMA.e3(p)
+    p = RMAParameters(r=r)
+    eq = e3(p)
 
     # start within the limit cycle basin
     u0 = eq + SA[0, -1e-6]
@@ -127,7 +127,7 @@ end
 # ╔═╡ 62bd9bc4-03c5-44ef-95d0-7fdbf200cec4
 function basin(r; num_samples=100)
   num_samples = num_samples
-  p = RMA.RMAParameters(r=r)
+  p = RMAParameters(r=r)
   xs = LinRange(0, p.r / p.c + 8, num_samples)
   ys = LinRange(0, 0.03, num_samples)
   zs = [brute_force_discriminator(x, y; p=p) for x in xs, y in ys]
@@ -138,7 +138,7 @@ end
 begin
   ptip_range = 1.6:0.1:2.5
   for r in ptip_range
-    p = RMA.RMAParameters(r=r)
+    p = RMAParameters(r=r)
     xs, ys, zs = basin(r)
     output = @strdict xs ys zs p
     @tagsave(datadir("basins", savename(p, "jld2")), output)
