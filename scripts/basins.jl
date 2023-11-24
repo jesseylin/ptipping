@@ -2,7 +2,7 @@ using DrWatson
 @quickactivate
 
 println("Including jl")
-include(srcdir("jl"))
+include(srcdir("RMA.jl"))
 
 
 println("Loading dependencies")
