@@ -2,7 +2,7 @@
 
 julia_version = "1.9.0"
 manifest_format = "2.0"
-project_hash = "bf3c24f846ad3c46afb618a8478b1d0e82000c13"
+project_hash = "53549dcd80046842c344fc77caf9edb7afe49be1"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "332e5d7baeff8497b923b730b994fa480601efc7"
@@ -500,6 +500,12 @@ version = "0.25.103"
     ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
     DensityInterface = "b429d917-457f-4dbc-8f4c-0cc954292b1d"
     Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[[deps.DocOpt]]
+deps = ["Dates", "Printf"]
+git-tree-sha1 = "9c2681389ed8d9cf6193b1ba31796f12456b111a"
+uuid = "968ba79b-81e4-546f-ab3a-2eecfa62a9db"
+version = "0.5.0"
 
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
