@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.26
+# v0.19.32
 
 using Markdown
 using InteractiveUtils
@@ -12,7 +12,7 @@ using DrWatson
 
 # ╔═╡ cc3d4f10-b13b-4381-8bbb-c5a5292ef8ea
 begin
-  using DifferentialEquations
+  using OrdinaryDiffEq
   using StaticArrays
   using LinearAlgebra
   BLAS.set_num_threads(6)

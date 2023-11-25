@@ -1,12 +1,11 @@
 using DrWatson
 @quickactivate
 
-println("Including jl")
+println("Including RMA.jl")
 include(srcdir("RMA.jl"))
 
-
 println("Loading dependencies")
-using DifferentialEquations
+using OrdinaryDiffEq
 using StaticArrays
 using LinearAlgebra
 BLAS.set_num_threads(6)
@@ -118,17 +117,17 @@ end
 
 function main()
     r_range = 1.6:0.1:2.5
-    num_samples = 300
+    num_samples = 500
     @showprogress for r in r_range
         p = RMAParameters(r=r)
         # guard to not redo experiment
-        if isfile(savename(p, "jld2"))
-            println("Already did r=$(r), skipping...")
-            continue
-        end
+        # if isfile(savename(p, "jld2"))
+        #     println("Already did r=$(r), skipping...")
+        #     continue
+        # end
         xs, ys, zs = basin(r; num_samples=num_samples)
         output = @strdict xs ys zs p
-        @tagsave(datadir("basins", savename(p, "jld2")), output)
+        @tagsave(datadir("basins_dense", savename(p, "jld2")), output)
     end
 end
 

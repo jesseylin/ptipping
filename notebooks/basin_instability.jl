@@ -12,7 +12,7 @@ using DrWatson
 
 # ╔═╡ b62d395b-a418-4b47-918f-d38a663d0d65
 begin
-  using DifferentialEquations
+  using OrdinaryDiffEq
   using StaticArrays
   using LinearAlgebra
   BLAS.set_num_threads(6)
