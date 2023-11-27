@@ -119,7 +119,7 @@ end
 
 # ╔═╡ fbc3ef99-cde3-4764-bbcd-3151d278eada
 function plot_basin!(f, xs, ys, zs, p; zs_orig)
-	diff_zs = zs + zs_orig
+  diff_zs = abs.(zs - zs_orig) + 2 * zs_orig
   heatmap!(
     f,
     xs, ys, diff_zs,
@@ -150,6 +150,7 @@ let
   vid_scene = Figure()
   vid_ax = Axis(vid_scene[1, 1]; xlabel="predator", ylabel="prey")
   plot_basin!(vid_ax, row.xs, row.ys, zs_iter[1], p_fn(1); zs_orig=zs_iter[10])
+  Makie.save(plotsdir("basin_instab.png"), vid_scene, px_per_unit=6)
   current_figure()
 end
 
@@ -157,9 +158,9 @@ end
 begin
   vid_scene = Figure()
   vid_ax = Axis(vid_scene[1, 1]; xlabel="predator", ylabel="prey")
-  record(vid_scene, "ptip.mp4", reverse(1:10);
+  record(vid_scene, plotsdir("ptip.mp4"), reverse(1:10);
     framerate=5) do i
-    plot_basin!(vid_ax, row.xs, row.ys, zs(i), p_fn(i); zs_orig = zs(10))
+    plot_basin!(vid_ax, row.xs, row.ys, zs(i), p_fn(i); zs_orig=zs(10))
   end
 end
 
