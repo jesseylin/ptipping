@@ -1,0 +1,66 @@
+% Inbuilt themes in beamer
+\documentclass{beamer}
+
+% Title page details:
+\title{Basin Instability}
+\author{Jesse Young Lin}
+\date{\today}
+
+\begin{document}
+
+% Title page frame
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% % Outline frame
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
+
+% Lists frame
+\section{Basins of attraction}
+\section{Basin instability for fixed points}
+\section{Basin instability for limit cycles}
+\section{Basin instability in the RMA model}
+
+\begin{frame}{Attractors}
+	Consider the system
+	\begin{align*}
+		\dot x = f(x;p).
+	\end{align*}
+	with an associated flow $\varphi_{t}$.
+	\vspace{0.5cm}
+	\begin{definition}[Attractor]
+		An \emph{attractor} is an invariant set of points $\Gamma(p)$ depending on the parameters
+		$p$ such that for some initial condition $x_{0}$
+		\begin{align*}
+			\inf_{\gamma \in \Gamma(p)} \lvert \varphi_{t}(x_{0}) - \gamma \rvert \to 0
+		\end{align*}
+		as $t \to \infty$.
+	\end{definition}
+
+\end{frame}
+
+\begin{frame}{Basins of attraction}
+	We have an attractor $\Gamma(p)$ if we find some initial condition $x_{0}$
+	that limits to it. Thus, we define
+	\vspace{0.5cm}
+	\begin{definition}[Basin of attraction]
+		\begin{align*}
+			B(\gamma, p) = \{x_{0} : \varphi_{t}(x_{0}) \to \Gamma(p)\ \textrm{as}\ t \to \infty\}
+		\end{align*}
+	\end{definition}
+	with the distance metric defined before.
+\end{frame}
+
+\begin{frame}{An example basin of attraction}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[]{figures/path.pdf}
+  \caption{\label{fig:label} }
+\end{figure}
+
+\end{frame}
+
+\end{document}
